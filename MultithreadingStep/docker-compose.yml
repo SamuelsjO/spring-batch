@@ -1,13 +1,24 @@
 version: "3"
 services: 
    
-  spring-batch-db:
+  pessoa-db:
     image: postgres:11
-    container_name: spring-batch-db
+    container_name: pessoa-db
     restart: always
     environment: 
-      - POSTGRES_DB=spring-batch-db
+      - POSTGRES_DB=pessoa-db
       - POSTGRES_USER=admin 
       - POSTGRES_PASSWORD=admin
     ports:
       - 5433:5432
+  
+  dados_bancarios-db:
+    image: postgres:11
+    container_name: dados_bancarios-db
+    restart: always
+    environment: 
+      - POSTGRES_DB=dados_bancarios-db
+      - POSTGRES_USER=admin 
+      - POSTGRES_PASSWORD=admin
+    ports:
+      - 5432:5432
