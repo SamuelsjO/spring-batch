@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import com.springbatch.migracaodados.dominio.DadosBancarios;
@@ -23,12 +24,13 @@ public class MigrarDadosBancariosStepConfig {
 
 	@Bean
 	public Step migrarDadosBancariosStep(ItemReader<DadosBancarios> arquivoDadosBancariosReader,
-			ItemWriter<DadosBancarios> bancoDadosBancariosWriter) {
+										 ItemWriter<DadosBancarios> bancoDadosBancariosWriter, TaskExecutor taskExecutor) {
 		return stepBuilderFactory
 				.get("migrarDadosBancariosStep")
 				.<DadosBancarios, DadosBancarios>chunk(1000)
 				.reader(arquivoDadosBancariosReader)
 				.writer(bancoDadosBancariosWriter)
+				.taskExecutor(taskExecutor)
 				.transactionManager(transactionManagerApp)
 				.build();
 	}

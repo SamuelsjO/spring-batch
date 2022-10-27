@@ -7,8 +7,10 @@ import org.springframework.context.ConfigurableApplicationContext;
 @SpringBootApplication
 public class MultithreadingStepApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(MultithreadingStepApplication.class, args);
-	}
+    public static void main(String[] args) {
+
+        ConfigurableApplicationContext context = SpringApplication.run(MultithreadingStepApplication.class, args);
+        context.close();
+    }
 
 }

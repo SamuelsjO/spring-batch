@@ -18,6 +18,7 @@ public class ArquivoDadosBancariosReaderConfig {
 				.delimited()
 				.names("pessoaId", "agencia", "conta", "banco", "id")
 				.addComment("--")
+				.saveState(false)
 				.targetType(DadosBancarios.class)
 				.build();
 	}

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import com.springbatch.migracaodados.dominio.Pessoa;
@@ -28,12 +29,14 @@ public class MigrarPessoaStepConfig {
 			ItemReader<Pessoa> arquivoPessoaReader,
 			ClassifierCompositeItemWriter<Pessoa> pessoaClassifierWriter,
 			ItemProcessor<Pessoa, Pessoa> pessoaProcessor,
-			FlatFileItemWriter<Pessoa> arquivoPessoasInvalidasWriter) {
+			FlatFileItemWriter<Pessoa> arquivoPessoasInvalidasWriter,
+			TaskExecutor taskExecutor) {
 		return stepBuilderFactory
 				.get("migrarPessoaStep")
 				.<Pessoa, Pessoa>chunk(1000)
 				.reader(arquivoPessoaReader)
 				.writer(pessoaClassifierWriter)
+				.taskExecutor(taskExecutor)
 				.stream(arquivoPessoasInvalidasWriter)
 				.transactionManager(transactionManagerApp)
 				.build();
